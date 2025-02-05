@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registation Form</title>
+    <style>
+        label {
+            font-weight: 600;
+            color: #915c5c;
+        }
+        body {
+            background: #f1f1f1;
+        }
+        .box8 {
+            box-shadow: 0px 0px 5px 1px #999;
+        }
+        .mx-t3 {
+            margin-top: 6rem;
+        }
+        .error {
+            color: red;
+            font-size: 0.8em;
+        }
+        span {
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <form id="addNew" method="post" action="" name="valiForm">
+
+            <div class="row jumbotron box8">
+                <div class="col-sm-12 mx-t3 mb-4">
+                    <h2 class="text-center text-info">Patient Registation Form</h2>
+                </div>
+                
+                <div class="col-sm-6 form-group">
+                    <label for="name-f">Full Name <span>*</span></label>
+                    <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                    <span class="error"></span>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="email">Email<span>*</span></label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                    <span class="error"></span>
+                </div>
+               
+                <div class="col-sm-6 form-group">
+                    <label for="sex">Gender<span>*</span></label>
+                    <select id="sex" name="sex" class="form-control browser-default custom-select" required>
+                        <option>--SELECT GENDER--</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <span class="error"></span>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="tel">Contact No<span>*</span></label>
+                    <input type="tel" name="phone" class="form-control" id="tel" placeholder="Enter Your Contact Number." required maxlength="10">
+                    <span class="error"></span>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="pass">Password<span>*</span></label>
+                    <input type="password" name="password" class="form-control" id="pass" placeholder="Enter your password." required>
+                    <span class="error"></span>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="pass2">Confirm Password <span>*</span></label>
+                    <input type="password" name="cnf-password" class="form-control" id="pass2" placeholder="Re-enter your password." required>
+                    <span class="error"></span>
+                </div>
+               
+                <div class="col-sm-12 form-group mb-0">
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    <button type="button" class="btn btn-primary float-right" onclick="history.back()">Back</button>
+                </div>
+            </div>
+        </form>
+        <% if (message) { %>
+            <h4 class="alert alert-danger mt-4"><%= message %></h4>
+        <% } %>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addNew').validate({
+                rules: {
+                    fname: {
+                        required: true,
+                        minlength: 2
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    specializations: {
+                        required: true
+                    },
+                    sex: {
+                        required: true
+                    },
+                    phone: {
+                        required: true,
+                        digits: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5
+                    },
+                    'cnf-password': {
+                        required: true,
+                        equalTo: "#pass"
+                    }
+                },
+                messages: {
+                    fname: {
+                        required: "First name is required.",
+                        minlength: "First name must be at least 2 characters long."
+                    },
+                    email: {
+                        required: "Email is required.",
+                        email: "Enter a valid email."
+                    },
+                    specializations: {
+                        required: "Please select a specialization."
+                    },
+                    sex: {
+                        required: "Please select gender."
+                    },
+                    phone: {
+                        required: "Contact number is required.",
+                        digits: "Enter only digits.",
+                        minlength: "Enter a valid 10-digit contact number.",
+                        maxlength: "Enter a valid 10-digit contact number."
+                    },
+                    password: {
+                        required: "Password is required.",
+                        minlength: "Password must be at least 5 characters long."
+                    },
+                    'cnf-password': {
+                        required: "Please confirm your password.",
+                        equalTo: "Passwords do not match."
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.appendTo(element.next('span.error'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+
+<aside id="menubar" class="menubar light">
+    <div class="app-user">
+      <div class="media">
+        <div class="media-left">
+          <div class="avatar avatar-md avatar-circle">
+            <a href="javascript:void(0)"><img class="img-responsive" src="/assets/images/images.png" alt="avatar"/></a>
+          </div>
+        </div>
+        <div class="media-body">
+          <div class="foldable">
+            
+            <h5><a href="javascript:void(0)" class=""><%= user.FullName %></a></h5>
+            <ul>
+              <li class="dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <small>
+                    <%= user.Email %>
+                  </small>
+                  
+                </a>
+              
+              </li>
+            </ul>
+          </div>
+        </div><!-- .media-body -->
+      </div><!-- .media -->
+    </div><!-- .app-user -->
+  
+    <div class="menubar-scroll">
+      <div class="menubar-scroll-inner">
+        <ul class="app-menu">
+          <li class="has-submenu">
+            <a href="/admin/admin_dashboard">
+              <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
+              <span class="menu-text">Dashboard</span>
+              
+            </a>
+         
+          </li>
+  
+         <li class="has-submenu">
+            <a href="javascript:void(0)" class="submenu-toggle">
+              <i class="menu-icon zmdi zmdi-pages zmdi-hc-lg"></i>
+              <span class="menu-text">Manage</span>
+              <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="/admin/doctor_list"><span class="menu-text">Manage Doctor</span></a></li>
+              <li><a href="/admin/speci_list"><span class="menu-text">Manage Specialization</span></a></li>
+              <li><a href="/admin/patient_details"><span class="menu-text">Patient</span></a></li>
+              <!-- <li><a href="/all_appoinment"><span class="menu-text">All Appointment</span></a></li>  -->
+            
+            </ul>
+          </li>
+          
+          <!-- <li>
+            <a href="/search">
+              <i class="menu-icon zmdi zmdi-search zmdi-hc-lg"></i>
+              <span class="menu-text">Search</span>
+            </a>
+          </li>
+          <li>
+            <a href="/report">
+              <i class="menu-icon zmdi zmdi-layers zmdi-hc-lg"></i>
+              <span class="menu-text">Report</span>
+            </a>
+          </li>
+   -->
+        </ul><!-- .app-menu -->
+      </div><!-- .menubar-scroll-inner -->
+    </div><!-- .menubar-scroll -->
+  </aside>

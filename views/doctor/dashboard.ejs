@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./layout/css.ejs') %>
+
+    <body class="menubar-left menubar-unfold menubar-light theme-primary">
+
+    <%- include('./layout/header.ejs') %>
+
+    <%- include('./layout/sidebar.ejs') %>
+
+    <main id="app-main" class="app-main">
+        <div class="wrap">
+            <section class="app-content">
+                <div class="row">
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="widget stats-widget">
+                                <div class="widget-body clearfix">
+                                   
+                                    <div class="pull-left">
+                                        <h3 class="widget-title text-warning"><span class="counter" data-plugin="counterUp"><%= newapponment%></span></h3>
+                                        <small class="text-color">Total New Appointment</small>
+                                    </div>
+                                    <span class="pull-right big-icon watermark"><i class="fa fa-paperclip"></i></span>
+                                </div>
+                                <footer class="widget-footer bg-warning">
+                                    <a href="/doctor/new_appoinment"><small> View Detail</small></a>
+                                    <span class="small-chart pull-right" data-plugin="sparkline" data-options="[4,3,5,2,1], { type: 'bar', barColor: '#ffffff', barWidth: 5, barSpacing: 2 }"></span>
+                                </footer>
+                            </div><!-- .widget -->
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="widget stats-widget">
+                                <div class="widget-body clearfix">
+                                  
+                                    <div class="pull-left">
+                                        <h3 class="widget-title text-success"><span class="counter" data-plugin="counterUp"><%= count%></span></h3>
+                                        <small class="text-color">Total Approved</small>
+                                    </div>
+                                    <span class="pull-right big-icon watermark"><i class="fa fa-ban"></i></span>
+                                </div>
+                                <footer class="widget-footer bg-success">
+                                    <a href="/doctor/approved_appoiment"><small> View Detail</small></a>
+                                    <span class="small-chart pull-right" data-plugin="sparkline" data-options="[1,2,3,5,4], { type: 'bar', barColor: '#ffffff', barWidth: 5, barSpacing: 2 }"></span>
+                                </footer>
+                            </div><!-- .widget -->
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="widget stats-widget">
+                                <div class="widget-body clearfix">
+                                    <div class="pull-left">
+                                      
+                                        <h3 class="widget-title text-danger"><span class="counter" data-plugin="counterUp"><%= cancelcount%></span></h3>
+                                        <small class="text-color">Cancelled Appointment</small>
+                                    </div>
+                                    <span class="pull-right big-icon watermark"><i class="fa fa-unlock-alt"></i></span>
+                                </div>
+                                <footer class="widget-footer bg-danger">
+                                    <a href="/doctor/cancel_appoinment"><small> View Detail</small></a>
+                                    <span class="small-chart pull-right" data-plugin="sparkline" data-options="[2,4,3,4,3], { type: 'bar', barColor: '#ffffff', barWidth: 5, barSpacing: 2 }"></span>
+                                </footer>
+                            </div><!-- .widget -->
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="widget stats-widget">
+                                <div class="widget-body clearfix">
+
+                                    <div class="pull-left">
+                                       
+                                        <h3 class="widget-title text-primary"><span class="counter" data-plugin="counterUp"><%= total%></span></h3>
+                                        <small class="text-color">Total Appointment</small>
+                                    </div>
+                                    <span class="pull-right big-icon watermark"><i class="fa fa-file-text-o"></i></span>
+                                </div>
+                                <footer class="widget-footer bg-primary">
+                                    <a href="/doctor/all_appoinment"><small> View Detail</small></a>
+                                    <span class="small-chart pull-right" data-plugin="sparkline" data-options="[5,4,3,5,2],{ type: 'bar', barColor: '#ffffff', barWidth: 5, barSpacing: 2 }"></span>
+                                </footer>
+                            </div><!-- .widget -->
+                        </div>
+                    </div><!-- .row -->
+
+
+
+                    <div class="row">
+
+            </section><!-- #dash-content -->
+        </div><!-- .wrap -->
+        <!-- APP FOOTER -->
+       
+        <!-- /#app-footer -->
+    </main>
+</body>
+</html>
+<!-- build:js assets/js/core.min.js -->
+<script src="/assets/libs/bower/jquery/dist/jquery.js"></script>
+<script src="/assets/libs/bower/jquery-ui/jquery-ui.min.js"></script>
+<script src="/assets/libs/bower/jQuery-Storage-API/jquery.storageapi.min.js"></script>
+<script src="/assets/libs/bower/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+<script src="/assets/libs/bower/jquery-slimscroll/jquery.slimscroll.js"></script>
+<script src="/assets/libs/bower/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+<script src="/assets/libs/bower/PACE/pace.min.js"></script>
+<!-- endbuild -->
+
+<!-- build:js assets/js/app.min.js -->
+<script src="/assets/js/library.js"></script>
+<script src="/assets/js/plugins.js"></script>
+<script src="/assets/js/app.js"></script>
+<!-- endbuild -->
+<script src="/assets/libs/bower/moment/moment.js"></script>
+<script src="/assets/libs/bower/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="/assets/js/fullcalendar.js"></script>

@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../layout/css1.ejs') %>
+	
+<body class="menubar-left menubar-unfold menubar-light theme-primary">
+
+
+<%- include('../layout/header.ejs') %>
+
+
+<%- include('../layout/sidebar.ejs') %>
+
+
+<!-- APP MAIN ---->
+<main id="app-main" class="app-main">
+  <div class="wrap">
+	<section class="app-content">
+		<div class="row">
+			<!-- DOM dataTable -->
+			<div class="col-md-12">
+				<div class="widget">
+					<header class="widget-header">
+						<h4 class="widget-title">Doctor List</h4>
+					</header><!-- .widget-header -->
+					<hr class="widget-separator">
+					<div class="widget-body">
+						<div class="table-responsive">
+							<a href="/admin/add_doctor" class="btn btn-primary" style="background-color: blue; border-color: blue;">Add New Doctor</a>
+							
+
+							<table class="table table-bordered table-hover js-basic-example dataTable table-custom">
+									<thead>
+									<tr>
+										<th>S.No</th>
+										<th>image</th>
+										<th>Doctor Name</th>
+                                        <th>Mobile Number</th>
+                                        <th>Email</th>
+										<th>Specilization</th>
+					
+									<th>Status</th>
+										<th>Action</th>
+										
+									</tr>
+								</thead>
+							
+								<tbody>
+                 
+				 <% sqlall.forEach(function(row,index) { %>
+
+									<tr>
+										<td><%= index + 1 %></td>
+										<td>
+											<% if (row.Image) { %>
+												<img src="/upload/<%= row.Image %>" alt="Doctor Image" style="width: 100px; height: 100px; object-fit: cover;">
+												<% } else { %>
+												No Image
+											<% } %>
+										</td>
+										
+							
+										<td><%=row.FullName%></td>
+										<td><%=row.MobileNumber%></td>
+										<td><%=row.Email%></td>
+										<td><%=row.specialization_name%></td>
+										
+										<td><%= row.is_active ? 'Active' : 'Deactivate' %></td>
+
+										
+                                        
+                                          <td>
+											<a href="/admin/edit_doctor/<%= row.ID %>" class="btn btn-primary" style="background-color: green; border-color: green;">Edit</a>
+
+                                            <!-- <a href="/admin/edit_doctor/<%= row.ID%>" class="btn btn-primary" style="background-color: green; border-color: green;">Edit</a> -->
+                                            <a href="/admin/delete_doctor/<%= row.ID %>" class="btn btn-danger" style="background-color: red; border-color: red;">Delete</a>
+											
+											  
+                                            <!-- <a href="" class="btn btn-primary" style="background-color: blue; border-color: blue;">View</a> -->
+                                          </td>
+										
+									</tr>
+								<%})%>   
+	
+								</tbody>
+                 
+							</table>
+						</div>
+					</div><!-- .widget-body -->
+				</div><!-- .widget -->
+			</div><!-- END column -->
+			
+			
+		</div><!-- .row -->
+	</section><!-- .app-content -->
+</div><!-- .wrap -->
+  <!-- APP FOOTER -->
+  
+  <!-- /#app-footer -->
+</main>
+<!--========== END app main -->
+
+	<!-- APP CUSTOMIZER -->
+
+
+	
+		<!-- build:js assets/js/core.min.js -->
+	<script src="/assets/libs/bower/jquery/dist/jquery.js"></script>
+	<script src="/assets/libs/bower/jquery-ui/jquery-ui.min.js"></script>
+	<script src="/assets/libs/bower/jQuery-Storage-API/jquery.storageapi.min.js"></script>
+	<script src="/assets/libs/bower/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+	<script src="/assets/libs/bower/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="/assets/libs/bower/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+	<script src="/assets/libs/bower/PACE/pace.min.js"></script>
+	<!-- endbuild -->
+
+	<!-- build:js assets/js/app.min.js -->
+	<script src="/assets/js/library.js"></script>
+	<script src="/assets/js/plugins.js"></script>
+	<script src="/assets/js/app.js"></script>
+	<!-- endbuild -->
+	<script src="/assets/libs/bower/moment/moment.js"></script>
+	<script src="/assets/libs/bower/fullcalendar/dist/fullcalendar.min.js"></script>
+	<script src="/assets/js/fullcalendar.js"></script>
+</body>
+</html>

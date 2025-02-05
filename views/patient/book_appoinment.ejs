@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <title>Doctor Appointment Management System || Home Page</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap-icons.css" rel="stylesheet">
+        <link href="/css/owl.carousel.min.css" rel="stylesheet">
+        <link href="/css/owl.theme.default.min.css" rel="stylesheet">
+        <link href="/css/templatemo-medic-care.css" rel="stylesheet">
+       
+</head>
+    <%- include('./layout/css1.ejs') %>
+    <body id="top">
+        <main>
+             <%- include('./layout/header.ejs') %>
+             <%- include('./layout/sidebar.ejs') %>
+            
+            <section class="section-padding" id="booking">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-lg-8 col-12 mx-auto">
+                            <div class="booking-form">
+                                 <h2 class="text-center mb-lg-3 mb-2">Book an appointment</h2>
+                            
+                                <form role="form" method="post" action="/patient/patient_store">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <input type="text" name="name" id="name" class="form-control" placeholder="Full name" required='true' value="<%= patient.Name %>"
+                                            >
+                                        </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address" required='true' value=" <%= patient.Email %>">
+                                        </div>
+                                   
+                                        <div class="col-lg-6 col-12">
+                                            <input type="telephone" name="phone" id="phone" class="form-control" placeholder="Enter Phone Number" maxlength="10" value=" <%= patient.MobileNumber %>">
+                                        </div>
+                                        
+                                        <div class="col-lg-6 col-12">
+                                            <input type="date" name="date" id="date" value="" class="form-control">
+                                            
+                                        </div>
+
+                                            <div class="col-lg-6 col-12">
+                                            <input type="time" name="time" id="time" value="" class="form-control">
+                                            
+                                        </div>
+
+                                <div class="col-lg-6 col-12">
+                                    <select onChange="showCustomer(this.value);" name="specialization" id="specialization" class="form-control" required>
+                                        <option value="">Select specialization</option>
+                                        <!-- Fetching Specializations -->
+                                        <% data.forEach(function(row,index) { %>
+                                            <option value="<%= row.ID %>"><%= row.Specialization %></option>
+                                        <% }) %>
+                                    </select>
+                            </div>
+
+                           
+                                <div class="col-lg-6 col-12">
+                            <select name="doctorlist" id="doctorlist" class="form-control">
+                            <option value="">Select Doctor</option>
+                            </select>
+                            </div>
+ 
+                                        <div class="col-12">
+                                            <textarea class="form-control" rows="5" id="message" name="message" placeholder="Additional Message"></textarea>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-4 col-6 mx-auto">
+                                            <button type="submit" class="form-control" name="submit" id="submit-button">Book Now</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+<script>
+
+</script>
+       
+        <!-- JAVASCRIPT FILES -->
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script src="../js/owl.carousel.min.js"></script>
+        <script src="../js/scrollspy.min.js"></script>
+        <script src="../js/custom.js"></script>
+    </body>
+</html>
+
+
+<script>
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').setAttribute('min', today);
+
+   function showCustomer(speci_id) {
+    // alert(speci_id);
+    $.ajax({
+    url: "/patient/get_doctor",
+
+    type: "POST",
+    data: JSON.stringify({ speci_id: speci_id }),
+    contentType: "application/json",  
+    success: function(data){
+        console.log(data)
+        let doctorDropdown = $('#doctorlist');
+            doctorDropdown.empty();
+            doctorDropdown.append('<option value="">Select Doctor</option>');
+            data.forEach(function(doctor) {
+                doctorDropdown.append('<option value="' + doctor.ID + '">' + doctor.Name + '</option>');
+            });
+    },
+    error: function(xhr, status, error) {
+        console.error("An error occurred: " + error);
+    }
+});
+
+}
+    
+    
+    </script>
+    
+
+
+

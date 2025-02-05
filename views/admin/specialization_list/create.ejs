@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Doctor Form</title>
+    <style>
+        label {
+            font-weight: 600;
+            color: #666;
+        }
+        body {
+            background: #f1f1f1;
+        }
+        .box8 {
+            box-shadow: 0px 0px 5px 1px #999;
+        }
+        .mx-t3 {
+            margin-top: -3rem;
+        }
+        .error {
+            color: red;
+            font-size: 0.8em;
+        }
+        span {
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <form id="addNew" method="post" name="valiForm">
+            <div class="row jumbotron box8">
+                <div class="col-sm-12 mx-t3 mb-4">
+                    <h2 class="text-center text-info">Add specialization</h2>
+                </div>
+                
+                <div class="col-sm-12 form-group">
+                    <label for="specialization">Specialization Name <span>*</span></label>
+                    <input type="text" class="form-control" name="specialization" id="specialization" placeholder="Enter your specialization name." required>
+                    <span class="error"></span>
+                </div>
+                
+               
+                <div class="col-sm-12 form-group mb-0">
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    <button type="button" class="btn btn-primary float-right" onclick="history.back()">Back</button>
+                </div>
+            </div>
+        </form>
+        <% if (message) { %>
+            <h4 class="alert alert-danger mt-4"><%= message %></h4>
+        <% } %>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addNew').validate({
+                rules: {
+                    specialization: {
+                        required: true,
+                        minlength: 3,
+                        alpha: true
+                    }
+                },                
+                messages: {
+                    specialization: {
+                        required: "specialization name is required.",
+                        minlength: "First name must be at least 3 characters long."
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.appendTo(element.next('span.error'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

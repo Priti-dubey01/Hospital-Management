@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../layout/css1.ejs') %>
+	
+<body class="menubar-left menubar-unfold menubar-light theme-primary">
+<!--============= start main area -->
+<%- include('../layout/header.ejs') %>
+
+<%- include('../layout/sidebar.ejs') %>
+
+<!-- APP MAIN ==========-->
+<main id="app-main" class="app-main">
+  <div class="wrap">
+	<section class="app-content">
+		<div class="row">
+			<!-- DOM dataTable -->
+			<div class="col-md-12">
+				<div class="widget">
+
+					<header class="widget-header">
+						<form id="basic-form" method="post" action="/admin/filter_patient">
+                            <div class="col-lg-6 col-12">
+                                <select name="doctor" id="doctor" class="form-control" required>
+                                    <option value="0">Select doctor</option>
+                                    <!-- Fetching Specializations -->
+                                    <% doctor_info.forEach(function(row,index) { %>
+                                        <option value="<%= row.ID %>" <%= row.ID == doctor_id ? 'selected' : '' %>><%= row.FullName %></option>
+                                    <% }) %>
+                                </select>
+                             </div>
+                                
+                                
+                                <button type="submit" class="btn btn-primary" name="search" id="submit">Search</button>
+                            </form>
+					</header><!-- .widget-header -->
+					
+					<div class="widget-body">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover js-basic-example dataTable table-custom">
+								<thead>
+									<tr>
+										<th>S.No</th>
+										<th>Appointment Number</th>
+										<th>Patient Name</th>
+										<th>Mobile Number</th>
+										<th>Email</th>
+									<th>Status</th>
+										
+										
+									</tr>
+								<cmd/thead>
+							
+								<tbody>
+									<% if (patient_info && patient_info.length > 0) { %>
+										<% patient_info.forEach((appointment, index) => { %>
+											<tr>
+												<td><%= index + 1 %></td>
+												<td><%= appointment.AppointmentNumber %></td>
+												<td><%= appointment.Name %></td>
+												<td><%= appointment.MobileNumber %></td>
+												<td><%= appointment.Email %></td>
+												<td> <% if (!appointment.Status) { %>
+                                                    Pendding 
+                                                  <% } else { %>
+                                                    <%= appointment.Status %>
+                                                  <% } %></td>
+												
+											</tr>
+										<% }) %>
+									<% } else { %>
+										<tr>
+											<td colspan="7">No record found against this search</td>
+										</tr>
+									<% } %>
+	
+								</tbody>
+                  
+               
+  
+  
+							</table>
+						</div>
+					</div><!-- .widget-body -->
+				</div><!-- .widget -->
+			</div><!-- END column -->
+			
+			
+		</div><!-- .row -->
+	</section><!-- .app-content -->
+</div><!-- .wrap -->
+  <!-- APP FOOTER -->
+ 
+  <!-- /#app-footer -->
+</main>
+<!--========== END app main -->
+
+	<!-- APP CUSTOMIZER -->
+
+	
+		<!-- build:js assets/js/core.min.js -->
+	<script src="/assets/libs/bower/jquery/dist/jquery.js"></script>
+	<script src="/assets/libs/bower/jquery-ui/jquery-ui.min.js"></script>
+	<script src="/assets/libs/bower/jQuery-Storage-API/jquery.storageapi.min.js"></script>
+	<script src="/assets/libs/bower/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+	<script src="/assets/libs/bower/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="/assets/libs/bower/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+	<script src="/assets/libs/bower/PACE/pace.min.js"></script>
+	<!-- endbuild -->
+
+	<!-- build:js assets/js/app.min.js -->
+	<script src="/assets/js/library.js"></script>
+	<script src="/assets/js/plugins.js"></script>
+	<script src="/assets/js/app.js"></script>
+	<!-- endbuild -->
+	<script src="/assets/libs/bower/moment/moment.js"></script>
+	<script src="/assets/libs/bower/fullcalendar/dist/fullcalendar.min.js"></script>
+	<script src="/assets/js/fullcalendar.js"></script>
+</body>
+</html>
