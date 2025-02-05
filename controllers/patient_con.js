@@ -179,8 +179,6 @@ const doctorResult = await query('SELECT FullName FROM tbldoctor WHERE id = ?', 
       return res.redirect('/patient/patient_list');
       }
 
-
-
       exports.logout = (req, res) => {
         req.session.destroy(err => {
             if (err) {
