@@ -57,56 +57,108 @@ exports.patient_login = async (req, res) => {
         return res.render('patient/patient_login', {});
       }
 
-exports.patientlogin = async (req, res) => {
-        const { email, password } = req.body;
-        try {
+// exports.patientlogin = async (req, res) => {
+//         const { email, password } = req.body;
+//         try {
 
           
-           if(!req.session.patient=='' || req.session.patient==undefined){
+//            if(!req.session.patient=='' || req.session.patient==undefined){
             
-          const users = await query('SELECT ID,Email, Password,Name,MobileNumber FROM tblpatient WHERE Email = ?', [email]);
+//           const users = await query('SELECT ID,Email, Password,Name,MobileNumber FROM tblpatient WHERE Email = ?', [email]);
       
-                if (users.length == 0) {
-          return res.render('patient/patient_login', {});
+//                 if (users.length == 0) {
+//           return res.render('patient/patient_login', {});
 
-                  return res.status(401).send('Invalid email or password');
-                }
-                  const patient = users[0];
-                const isMatch = await bcrypt.compare(password, patient.Password);
+//                   return res.status(401).send('Invalid email or password');
+//                 }
+//                   const patient = users[0];
+//                 const isMatch = await bcrypt.compare(password, patient.Password);
         
-                if (!isMatch) {
-                  return res.status(401).send('Invalid email or password');
-                }
-                  // session store
+//                 if (!isMatch) {
+//                   return res.status(401).send('Invalid email or password');
+//                 }
+//                   // session store
 
-                req.session.patient = patient;
+//                 req.session.patient = patient;
                               
-                res.redirect('/patient/patient_dashboard');
-            }
-            else
-              {
-                return res.render('patient/patient_login', {});
-              }
+//                 res.redirect('/patient/patient_dashboard');
+//             }
+//             else
+//               {
+//                 return res.render('patient/patient_login', {});
+//               }
             
-          } 
-          catch (error) {
-           return res.status(500).send('Server error');
-          }
-        };
+//           } 
+//           catch (error) {
+//            return res.status(500).send('Server error');
+//           }
+//         };
 
-        exports.patient_dashboard = async(req, res) => {
+// exports.patient_dashboard = async(req, res) => {
 
-          const sqlall = await query('SELECT * FROM tblappointment');
-        const sqlcount = await query('SELECT count(ID) as count FROM tblappointment WHERE patient_id=?', [req.session.patient.ID]);
-       allPatientAppoinment=sqlcount[0].count;
+//           const sqlall = await query('SELECT * FROM tblappointment');
+          
+//         const sqlcount = await query('SELECT count(ID) as count FROM tblappointment WHERE patient_id=?', [req.session.patient.ID]);
+//        allPatientAppoinment=sqlcount[0].count;
 
-          res.render('patient/patient_dashboard', {sqlall,allPatientAppoinment});
+//           res.render('patient/patient_dashboard', {sqlall,allPatientAppoinment});
                 
-        }
+//         }
 
-     
+exports.patientlogin = async (req, res) => {
+  const { email, password } = req.body;
 
-       exports.patient_list = async (req, res) => {
+  try {
+      if (req.session.patient) {
+          return res.redirect('/patient/patient_dashboard'); // Prevent re-login
+      }
+
+      const users = await query('SELECT ID, Email, Password, Name, MobileNumber FROM tblpatient WHERE Email = ?', [email]);
+
+      if (users.length === 0) {
+          return res.render('patient/patient_login', { message: 'Invalid email or password' });
+      }
+
+      const patient = users[0];
+      const isMatch = await bcrypt.compare(password, patient.Password);
+
+      if (!isMatch) {
+          return res.render('patient/patient_login', { message: 'Invalid email or password' });
+      }
+
+      // Store session data
+      req.session.patient = patient;
+      console.log("Session Set:", req.session.patient); // Debugging
+
+      res.redirect('/patient/patient_dashboard');
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+  }
+};
+
+
+exports.patient_dashboard = async (req, res) => {
+  console.log("Session Data:", req.session); // Debugging
+  if (!req.session.patient) {
+      return res.redirect('/patient/patient_login'); // Redirect if session is missing
+  }
+
+  try {
+      const sqlall = await query('SELECT * FROM tblappointment');
+      const sqlcount = await query('SELECT count(ID) as count FROM tblappointment WHERE patient_id=?', [req.session.patient.ID]);
+
+      const allPatientAppoinment = sqlcount[0].count;
+
+      res.render('patient/patient_dashboard', { sqlall, allPatientAppoinment });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Server error");
+  }
+};
+
+
+exports.patient_list = async (req, res) => {
      
         //  req.session.patient.ID;
              
@@ -115,14 +167,14 @@ exports.patientlogin = async (req, res) => {
       };
 
 
-        exports.book_appo = async (req, res) => {
+exports.book_appo = async (req, res) => {
                 const specializations = await query('SELECT * FROM tblspecialization');
               return res.render('patient/book_appoinment', { message: null, data: specializations });
           
         };
 
 
-      exports.get_doctor = async (req, res) => {
+exports.get_doctor = async (req, res) => {
         try {
           
             const speci_id = req.body.speci_id;
@@ -133,51 +185,55 @@ exports.patientlogin = async (req, res) => {
         }
       };
       
-        exports.book_patient_store = async(req,res)=>{
-          const { name, email, phone, date ,time,specialization,doctorlist,message} = req.body;
+     
+
+exports.book_patient_store = async(req,res)=>{
+        const { name, email, phone, date ,time,specialization,doctorlist,message} = req.body;
 
 const doctorResult = await query('SELECT FullName FROM tbldoctor WHERE id = ?', [doctorlist]);
 
 
-          var appoint_no = Math.floor(Math.random() * 1000000000);
+        var appoint_no = Math.floor(Math.random() * 1000000000);
 
-         var booked= await query('INSERT INTO tblappointment SET ?', {
-          AppointmentNumber:appoint_no,
-          Name: name,
-          MobileNumber: phone,
-          Email: email,
-          AppointmentDate: date,
-          AppointmentTime: time,
-          Specialization:	specialization,
-          Doctor:doctorlist,
-          Message:message,
-          patient_id:req.session.patient.ID
-          });
+       var booked= await query('INSERT INTO tblappointment SET ?', {
+        AppointmentNumber:appoint_no,
+        Name: name,
+        MobileNumber: phone,
+        Email: email,
+        AppointmentDate: date,
+        AppointmentTime: time,
+        Specialization:	specialization,
+        Doctor:doctorlist,
+        Message:message,
+        patient_id:req.session.patient.ID
+        });
 
-          if (booked) {
-            const accountSid = 'AC58ee352b079cfbe56a48f558cae1e034';
-            const authToken = 'fda7b05386a5a8a048dee87627610cc2';
-            const client = require('twilio')(accountSid, authToken);
-    
-            client.messages
-                .create({
-                    body: `Dear ${name},
-    
-    Your appointment no ${appoint_no} with ${doctorResult[0].FullName} is confirmed for ${date} at ${time}. 
-    
-    If you need to reschedule or cancel, please contact us at 6352266907.
-    
-    Thank you!
-    
-    Sarvajanik College of Engineering and Technology`,
-                    from: '+15714411043',
-                    to: '+916352266907'
-                })
-                .then(message => console.log(message.sid))
-                .catch(error => console.error(error));  
-        }
-      return res.redirect('/patient/patient_list');
+        if (booked) {
+          const accountSid = 'AC58ee352b079cfbe56a48f558cae1e034';
+          const authToken = 'cbb31611226ad0607de37721140b30d5';
+          const client = require('twilio')(accountSid, authToken);
+  
+          client.messages
+              .create({
+                  body: `Dear ${name},
+  
+  Your appointment no ${appoint_no} with ${doctorResult[0].FullName} is confirmed for ${date} at ${time}. 
+  
+  If you need to reschedule or cancel, please contact us at 6352266907.
+  
+  Thank you!
+  
+  Hospital Management Team`,
+                  from: '+15714411043',
+                  to: '+916352266907'
+              })
+              .then(message => console.log(message.sid))
+              .catch(error => console.error(error));  
       }
+    return res.redirect('/patient/patient_list');
+    }
+
+
 
       exports.logout = (req, res) => {
         req.session.destroy(err => {

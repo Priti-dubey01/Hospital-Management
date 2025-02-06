@@ -44,9 +44,9 @@ if (!appointment_id) {
             name: result[0].Name,
             doctor: result[0].Doctor,
             date: result[0].AppointmentDate,
-            status: result[0].Status
-            
+            status: result[0].Status ? result[0].Status : "Pending"
         });
+        
     });
 });
 
